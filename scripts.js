@@ -16,14 +16,4 @@ searchBtn.addEventListener('click', () => {
 function getWeather(location) {
     const url = `${apiUrl}?q=${location}&appid=${apiKey}&units=metric`;
 
-    fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            locElement.textContent = data.name;
-            tempElement.textContent = `${Math.round(data.main.temp)}°C`;
-            descElement.textContent = data.weather[0].description;
-        })
-        .catch(error => {
-            console.error("Error fetching weather data:", error);
-        });
 }
