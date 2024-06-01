@@ -3,3 +3,11 @@
     margin:auto;
     margin-top: 105px;
 }
+
+body {
+    background-image: url("images/sunny.jpg");
+    color: #FFFFFF;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
