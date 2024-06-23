@@ -12,7 +12,9 @@ const descElement = document.getElementById("description");
 searchBtn.addEventListener('click', () => {
     const location = locInput;
     if (location){
-        getWeather(location);
+        coords = getCoords(location);
+        longitude = coords[0];
+        latitude = coords[1];
     }
 });
 
@@ -33,17 +35,11 @@ function getCoords(location) {
 }
 
 function getWeather(longitude, latitude) {
-    fetch(MeteoAPI)
-        .then(Response => {
-            if(!Response.ok){
-                throw new Error("Bad Response From API");
-            }
-            return Response.json();
-        })
-        .then(data => {
-            console.log(data);
-        })
-        .catch(error => {
-            console.error("Error: ", error);
-        });
+    const params = {
+        "latitude": latitude,
+        "longitude": longitude,
+        "hourly": ["precipitation_probability", "precipitation", "snow_depth", "pressure_msl", "cloud_cover", "wind_speed_180m", "wind_direction_120m", "temperature_120m"],
+        "daily": ["weather_code", "sunrise", "sunset", "uv_index_max", "precipitation_hours"],
+        "forecast_days": 3
+    };
 }
