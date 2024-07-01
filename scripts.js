@@ -4,14 +4,14 @@ const locElement = document.getElementById("location");
 const tempElement = document.getElementById("temperature");
 const descElement = document.getElementById("description");
 
-searchBtn.addEventListener('click', () => {
+searchBtn.addEventListener('click', async () => {
     const location = locInput.value;
     console.log("button clicked");
     if (location){
-        coords = getCoords(location);
+        coords = await getCoords(location);
         longitude = coords[0];
         latitude = coords[1]; 
-        console.log(getWeather(longitude, latitude));
+        console.log( await getWeather(longitude, latitude));
     }
 });
 
@@ -37,7 +37,7 @@ async function getWeather(longitude, latitude) {
     };
 
     console.log("getting weather")
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=precipitation_probability,precipitation,snow_depth,pressure_msl,cloud_cover,wind_speed_180m,wind_direction_120m,temperature_120m&daily=weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=3`, {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?`, {mode:"no-cors"}, {
         method: 'GET',
         params: params
       });
