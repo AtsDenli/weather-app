@@ -11,7 +11,9 @@ searchBtn.addEventListener('click', () => {
         coords = getCoords(location);
         longitude = coords[0];
         latitude = coords[1]; 
-        console.log(getWeather(longitude, latitude));
+        weatherdata = getWeather(longitude,latitude);
+        console.log(weatherdata);
+        console.log("Achieved");
     }
 });
 
@@ -33,11 +35,11 @@ async function getWeather(longitude, latitude) {
         "longitude": longitude,
         "hourly": ["precipitation_probability", "precipitation", "snow_depth", "pressure_msl", "cloud_cover", "wind_speed_180m", "wind_direction_120m", "temperature_120m"],
         "daily": ["weather_code", "sunrise", "sunset", "uv_index_max", "precipitation_hours"],
-        "forecast_days": 3
+        "forecast_days": 1
     };
 
     console.log("getting weather")
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=precipitation_probability,precipitation,snow_depth,pressure_msl,cloud_cover,wind_speed_180m,wind_direction_120m,temperature_120m&daily=weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=3`, {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=precipitation_probability,precipitation,snow_depth,pressure_msl,cloud_cover,wind_speed_180m,wind_direction_120m,temperature_120m&daily=weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=1`, {
         method: 'GET',
         params: params
       });
