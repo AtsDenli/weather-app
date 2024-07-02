@@ -11,7 +11,7 @@ searchBtn.addEventListener('click', async () => {
         coords = await getCoords(location);
         longitude = coords[0];
         latitude = coords[1]; 
-        weatherdata = getWeather(longitude,latitude);
+        weatherdata = await getWeather(longitude,latitude);
         console.log(weatherdata);
         console.log("Achieved");
     }
