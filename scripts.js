@@ -9,6 +9,7 @@ searchBtn.addEventListener('click', async () => {
     console.log("button clicked");
     if (location){
         coords = await getCoords(location);
+        console.log("Coords received");
         longitude = coords[0];
         latitude = coords[1]; 
         weatherdata = await getWeather(longitude,latitude);
@@ -18,15 +19,13 @@ searchBtn.addEventListener('click', async () => {
 });
 
 async function getCoords(location) {
-    try {
-        const response = await fetch(`https://api.opencage.com/geocode/v1/json?q=${location}&key=965df24d09904329882d759f3737938d`);
-        const data = await response.json();
-        return [data.results[0].geometry.lng, data.results[0].geometry.lat];
+    const apiUrl = `https://api.opencage.com/geocode/v1/json?q=${location}&key=965df24d09904329882d759f3737938d`;
+    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`);
+    if (!response.ok) {
+        throw new Error('Network response was not ok.');
     }
-    catch (error) {
-        console.log(error);
-        console.log("Geocoding API failed");
-    }
+    const data = await response.json();
+    return data.contents;
 }
 
 async function getWeather(longitude, latitude) {
