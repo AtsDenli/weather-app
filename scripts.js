@@ -10,8 +10,9 @@ searchBtn.addEventListener('click', async () => {
     if (location){
         coords = await getCoords(location);
         console.log("Coords received");
-        longitude = coords[0];
-        latitude = coords[1]; 
+        console.log(coords); 
+        longitude = coords[0][2][1][1];
+        latitude = coords[0][2][1][0]; 
         weatherdata = await getWeather(longitude,latitude);
         console.log(weatherdata);
         console.log("Achieved");
@@ -19,13 +20,14 @@ searchBtn.addEventListener('click', async () => {
 });
 
 async function getCoords(location) {
-    const apiUrl = `https://api.opencage.com/geocode/v1/json?q=${location}&key=965df24d09904329882d759f3737938d`;
-    const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`);
+    const apiUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(location)}&key=AIzaSyBrm_dtI4sWXrY0NwK_WY7yl-NCU1BurEI`;
+    //const response = await fetch(`https://api.allorigins.win/get?url=${encodeURIComponent(apiUrl)}`);
+    const response = await fetch(apiUrl);
     if (!response.ok) {
         throw new Error('Network response was not ok.');
     }
     const data = await response.json();
-    return data.contents;
+    return data;
 }
 
 async function getWeather(longitude, latitude) {
