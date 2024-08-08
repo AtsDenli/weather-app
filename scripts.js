@@ -8,9 +8,9 @@ const month = currentTime.getMonth() + 1;
 const day = currentTime.getDate();
 const hour = currentTime.getHours();
 
-const tomorrow = False;
+let tomorrow = false;
 if (hour >= 19){
-    tomorrow = True;
+    tomorrow = true;
 }
 
 searchBtn.addEventListener('click', async () => {
@@ -23,20 +23,27 @@ searchBtn.addEventListener('click', async () => {
         const dailyVars = weatherdata.daily;
         const hourlyVars = weatherdata.hourly;
         
+        let sunrise = '';
+        let sunset = '';
+        let tempMax = 0;
+        let tempMin = 0;
+        let uvIndex = 0;
+        let precipitationHours = 0;
+
         if (!tomorrow) {
-            const sunrise = dailyVars.sunrise[0].split("T");
-            const sunset = dailyVars.sunset[0].split("T");
-            const tempMax = dailyVars.temperature_2m_max[0];
-            const tempMin = dailyVars.temperature_2m_min[0];
-            const uvIndex = dailyVars.uv_index_max[0];
-            const precipitationHours = dailyVars.precipitation_hours[0];
+            sunrise = dailyVars.sunrise[0].split("T");
+            sunset = dailyVars.sunset[0].split("T");
+            tempMax = dailyVars.temperature_2m_max[0];
+            tempMin = dailyVars.temperature_2m_min[0];
+            uvIndex = dailyVars.uv_index_max[0];
+            precipitationHours = dailyVars.precipitation_hours[0];
         } else {
-            const sunrise = dailyVars.sunrise[1].split("T");
-            const sunset = dailyVars.sunset[1].split("T");
-            const tempMax = dailyVars.temperature_2m_max[1];
-            const tempMin = dailyVars.temperature_2m_min[1];
-            const uvIndex = dailyVars.uv_index_max[1];
-            const precipitationHours = dailyVars.precipitation_hours[1];
+            sunrise = dailyVars.sunrise[1].split("T");
+            sunset = dailyVars.sunset[1].split("T");
+            tempMax = dailyVars.temperature_2m_max[1];
+            tempMin = dailyVars.temperature_2m_min[1];
+            uvIndex = dailyVars.uv_index_max[1];
+            precipitationHours = dailyVars.precipitation_hours[1];
         }
 
         const cloudCover = hourlyVars.cloud_cover;
