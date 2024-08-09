@@ -31,15 +31,15 @@ searchBtn.addEventListener('click', async () => {
         let precipitationHours = 0;
 
         if (!tomorrow) {
-            sunrise = dailyVars.sunrise[0].split("T");
-            sunset = dailyVars.sunset[0].split("T");
+            sunrise = dailyVars.sunrise[0].split("T")[1] ;
+            sunset = dailyVars.sunset[0].split("T")[1];
             tempMax = dailyVars.temperature_2m_max[0];
             tempMin = dailyVars.temperature_2m_min[0];
             uvIndex = dailyVars.uv_index_max[0];
             precipitationHours = dailyVars.precipitation_hours[0];
         } else {
-            sunrise = dailyVars.sunrise[1].split("T");
-            sunset = dailyVars.sunset[1].split("T");
+            sunrise = dailyVars.sunrise[1].split("T")[1];
+            sunset = dailyVars.sunset[1].split("T")[1];
             tempMax = dailyVars.temperature_2m_max[1];
             tempMin = dailyVars.temperature_2m_min[1];
             uvIndex = dailyVars.uv_index_max[1];
@@ -82,13 +82,13 @@ async function getWeather(longitude, latitude) {
 }
 
 function updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours, cloudCover, precProb, pressure, windDir, windSpeed){
-    document.getElementById("sunrise").innerHTML = sunrise;
-    document.getElementById("sunset").innerHTML = sunset;
-    document.getElementById("temp").innerHTML = `${tempMin} - ${tempMax}`;
-    document.getElementById("uv").innerHTML = uvIndex;
-    document.getElementById("precipitation").innerHTML = precipitationHours;
+    document.getElementById("sunrise").innerHTML = `Sunrise at: ${sunrise}`;
+    document.getElementById("sunset").innerHTML = `Sunset at: ${sunset}`;
+    document.getElementById("temp").innerHTML = `Temperature range: ${tempMin} - ${tempMax}`;
+    document.getElementById("uv").innerHTML = `UV Index ${uvIndex}`;
+    document.getElementById("precipitation").innerHTML = `Hours of precipitation: ${precipitationHours}`;
 
-    //document.getElementById("times")
+    //document.getElementById("times").innerHTML = ``
 }
 
 function makeHourlyData(data){
