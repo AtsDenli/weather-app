@@ -74,35 +74,18 @@ async function getWeather(longitude, latitude) {
         "forecast_days": 1
     };
 
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=temperature,precipitation_probability,precipitation,snow_depth,pressure_msl,cloud_cover,wind_speed_180m,wind_direction_120m&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=2`, {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=2`, {
         method: 'GET',
         params: params
       });
     return response.json();
 }
 
-function updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours, cloudCover, precProb, pressure, windDir, windSpeed){
+function updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours){
     document.getElementById("sunrise").innerHTML = `Sunrise at: ${sunrise}`;
     document.getElementById("sunset").innerHTML = `Sunset at: ${sunset}`;
     document.getElementById("temp").innerHTML = `Temperature range: ${tempMin} - ${tempMax}`;
     document.getElementById("uv").innerHTML = `UV Index ${uvIndex}`;
     document.getElementById("precipitation").innerHTML = `Hours of precipitation: ${precipitationHours}`;
 
-    //document.getElementById("times").innerHTML = ``
-}
-
-function makeHourlyData(data){
-    let first = 0;
-    let last = 0;
-    if (tomorrow){ //if its past 8 pm, display tomorrow's forecast
-        first = 24;
-        last = 48;
-    } else {
-        last = 24;    
-    }
-    let string = ``;
-    for (let i = first; i < last; i++){
-        string.concat(" ",`${data[i]}`);
-    }
-    return string;
 }
