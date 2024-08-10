@@ -47,11 +47,8 @@ searchBtn.addEventListener('click', async () => {
         }
 
         const cloudCover = hourlyVars.cloud_cover;
-        const precProb = hourlyVars.precipitation_probability;
-        const pressure = hourlyVars.pressure_ms1;
-        const windDir = hourlyVars.wind_direction_120m;
-        const windSpeed = hourlyVars.wind_speed_120m;
-        updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours, cloudCover, precProb, pressure, windDir, windSpeed);
+
+        updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours, cloudCover);
     }
 });
 
@@ -69,23 +66,32 @@ async function getWeather(longitude, latitude) {
     const params = {
         "latitude": latitude,
         "longitude": longitude,
-        "hourly": ["precipitation_probability", "precipitation", "snow_depth", "pressure_msl", "cloud_cover", "wind_speed_180m", "wind_direction_120m", "temperature_120m"],
+        "hourly": ["cloud_cover"],
         "daily": ["weather_code", "sunrise", "sunset", "uv_index_max", "precipitation_hours"],
         "forecast_days": 1
     };
 
-    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=2`, {
+    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&hourly=cloud_cover&daily=temperature_2m_max,temperature_2m_min,weather_code,sunrise,sunset,uv_index_max,precipitation_hours&forecast_days=2`, {
         method: 'GET',
         params: params
       });
     return response.json();
 }
 
-function updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours){
+function updatePage(sunrise, sunset, tempMax, tempMin, uvIndex, precipitationHours, cloudCover){
     document.getElementById("sunrise").innerHTML = `Sunrise at: ${sunrise}`;
     document.getElementById("sunset").innerHTML = `Sunset at: ${sunset}`;
     document.getElementById("temp").innerHTML = `Temperature range: ${tempMin} - ${tempMax}`;
     document.getElementById("uv").innerHTML = `UV Index ${uvIndex}`;
     document.getElementById("precipitation").innerHTML = `Hours of precipitation: ${precipitationHours}`;
 
+    const body = document.body;
+
+    if (precipitationHours > 13){
+        body.style.backgroundImage = "url('images/rainy.jpg')";
+    } else if (cloudCover[hour] > 50){
+        body.style.backgroundImage = "url('images/cloudy.jpg')";
+    } else {
+        body.style.backgroundImage = "url('images/sunny.jpg')";
+    }
 }
